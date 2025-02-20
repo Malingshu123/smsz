@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.CardKeysMapper">
+    
+    <resultMap type="CardKeys" id="CardKeysResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="cardType"    column="card_type"    />
+        <result property="points"    column="points"    />
+        <result property="creatBy"    column="creat_by"    />
+        <result property="activationDate"    column="activation_date"    />
+        <result property="expirationDate"    column="expiration_date"    />
+        <result property="useStatus"    column="use_status"    />
+        <result property="status"    column="status"    />
+        <result property="loginCount"    column="login_count"    />
+        <result property="loginIp"    column="login_ip"    />
+        <result property="loginDate"    column="login_date"    />
+        <result property="createdDate"    column="created_date"    />
+        <result property="updatedDate"    column="updated_date"    />
+    </resultMap>
+
+    <sql id="selectCardKeysVo">
+        select id, code, card_type, points, creat_by, activation_date, expiration_date, use_status, status, login_count, login_ip, login_date, created_date, updated_date from card_keys
+    </sql>
+
+    <select id="selectCardKeysList" parameterType="CardKeys" resultMap="CardKeysResult">
+        <include refid="selectCardKeysVo"/>
+        <where>  
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="cardType != null  and cardType != ''"> and card_type = #{cardType}</if>
+            <if test="points != null "> and points = #{points}</if>
+            <if test="creatBy != null  and creatBy != ''"> and creat_by = #{creatBy}</if>
+            <if test="activationDate != null "> and activation_date = #{activationDate}</if>
+            <if test="expirationDate != null "> and expiration_date = #{expirationDate}</if>
+            <if test="useStatus != null "> and use_status = #{useStatus}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="loginCount != null "> and login_count = #{loginCount}</if>
+            <if test="loginIp != null  and loginIp != ''"> and login_ip = #{loginIp}</if>
+            <if test="loginDate != null "> and login_date = #{loginDate}</if>
+            <if test="createdDate != null "> and created_date = #{createdDate}</if>
+            <if test="updatedDate != null "> and updated_date = #{updatedDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectCardKeysById" parameterType="Long" resultMap="CardKeysResult">
+        <include refid="selectCardKeysVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertCardKeys" parameterType="CardKeys" useGeneratedKeys="true" keyProperty="id">
+        insert into card_keys
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null and code != ''">code,</if>
+            <if test="cardType != null and cardType != ''">card_type,</if>
+            <if test="points != null">points,</if>
+            <if test="creatBy != null and creatBy != ''">creat_by,</if>
+            <if test="activationDate != null">activation_date,</if>
+            <if test="expirationDate != null">expiration_date,</if>
+            <if test="useStatus != null">use_status,</if>
+            <if test="status != null">status,</if>
+            <if test="loginCount != null">login_count,</if>
+            <if test="loginIp != null">login_ip,</if>
+            <if test="loginDate != null">login_date,</if>
+            <if test="createdDate != null">created_date,</if>
+            <if test="updatedDate != null">updated_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null and code != ''">#{code},</if>
+            <if test="cardType != null and cardType != ''">#{cardType},</if>
+            <if test="points != null">#{points},</if>
+            <if test="creatBy != null and creatBy != ''">#{creatBy},</if>
+            <if test="activationDate != null">#{activationDate},</if>
+            <if test="expirationDate != null">#{expirationDate},</if>
+            <if test="useStatus != null">#{useStatus},</if>
+            <if test="status != null">#{status},</if>
+            <if test="loginCount != null">#{loginCount},</if>
+            <if test="loginIp != null">#{loginIp},</if>
+            <if test="loginDate != null">#{loginDate},</if>
+            <if test="createdDate != null">#{createdDate},</if>
+            <if test="updatedDate != null">#{updatedDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCardKeys" parameterType="CardKeys">
+        update card_keys
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="code != null and code != ''">code = #{code},</if>
+            <if test="cardType != null and cardType != ''">card_type = #{cardType},</if>
+            <if test="points != null">points = #{points},</if>
+            <if test="creatBy != null and creatBy != ''">creat_by = #{creatBy},</if>
+            <if test="activationDate != null">activation_date = #{activationDate},</if>
+            <if test="expirationDate != null">expiration_date = #{expirationDate},</if>
+            <if test="useStatus != null">use_status = #{useStatus},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="loginCount != null">login_count = #{loginCount},</if>
+            <if test="loginIp != null">login_ip = #{loginIp},</if>
+            <if test="loginDate != null">login_date = #{loginDate},</if>
+            <if test="createdDate != null">created_date = #{createdDate},</if>
+            <if test="updatedDate != null">updated_date = #{updatedDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCardKeysById" parameterType="Long">
+        delete from card_keys where id = #{id}
+    </delete>
+
+    <delete id="deleteCardKeysByIds" parameterType="String">
+        delete from card_keys where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="findByCode" parameterType="String" resultMap="CardKeysResult">
+        <include refid="selectCardKeysVo"/>
+        where code = #{code}
+    </select>
+</mapper>
