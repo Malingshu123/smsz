@@ -62,6 +62,12 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/welcome',
+    component: () => import('@/views/welcome'),
+    name: 'Welcome',
+    meta: { title: '欢迎页', icon: 'welcome', affix: true }
+  },
+  {
     path: '',
     component: Layout,
     redirect: 'index',
