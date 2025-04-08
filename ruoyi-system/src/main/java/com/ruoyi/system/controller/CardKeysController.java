@@ -103,18 +103,13 @@ public class CardKeysController extends BaseController
         return cardKeysService.validateCardKey(validateCardRequest);
     }
 
-
-    private String getClientIP(HttpServletRequest request) {
-        String ip = request.getHeader("X-Forwarded-For");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        return ip;
+    @GetMapping(value = "/getCardInfo/{code}")
+    public AjaxResult getCardInfo(@PathVariable("code") String code)
+    {
+        CardKeys cardKeys = new CardKeys();
+        cardKeys.setCode(code);
+        CardKeys result = cardKeysService.selectCardKeysList(cardKeys).get(0);
+        result.setId(null);
+        return success(result);
     }
 }
