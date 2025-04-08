@@ -103,7 +103,7 @@ public class CardKeysController extends BaseController
         return cardKeysService.validateCardKey(validateCardRequest);
     }
 
-    @GetMapping("/getCardInfo/{code}")
+    @GetMapping(value = "/getCardInfo/{code}")
     public AjaxResult getCardInfo(@PathVariable("code") String code)
     {
         CardKeys cardKeys = new CardKeys();
