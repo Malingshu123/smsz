@@ -116,6 +116,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="findByCode" parameterType="String" resultMap="CardKeysResult">
         <include refid="selectCardKeysVo"/>
-        where code = #{code}
+        where code = #{code} FOR UPDATE
     </select>
 </mapper>

@@ -1,13 +1,11 @@
 package com.ruoyi.system.domain.vo;
 
-import com.ruoyi.common.utils.StringUtils;
-
 
 public class ValidateCardRequest
 {
     private String code;
 
-    private String clientIP;
+    private Integer count;
 
     public String getCode() {
         return code;
@@ -17,11 +15,11 @@ public class ValidateCardRequest
         this.code = code;
     }
 
-    public String getClientIP() {
-        return clientIP;
+    public Integer getCount() {
+        return count;
     }
 
-    public void setClientIP(String clientIP) {
-        this.clientIP = clientIP;
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }
