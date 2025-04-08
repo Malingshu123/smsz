@@ -100,8 +100,6 @@ public class CardKeysController extends BaseController
 
     @PostMapping("/validate")
     public AjaxResult validateCard(@RequestBody ValidateCardRequest validateCardRequest, HttpServletRequest request) {
-        String clientIP = getClientIP(request);
-        validateCardRequest.setClientIP(clientIP);
         return cardKeysService.validateCardKey(validateCardRequest);
     }
 
