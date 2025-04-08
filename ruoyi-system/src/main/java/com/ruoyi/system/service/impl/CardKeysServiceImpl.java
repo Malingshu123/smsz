@@ -112,7 +112,7 @@ public class CardKeysServiceImpl implements ICardKeysService
     public AjaxResult validateCardKey(ValidateCardRequest validateCardRequest) {
 
         try {
-            String code = validateCardRequest.getCode();
+            String code = validateCardRequest.getCode().trim();
 
             if (StringUtils.isEmpty(code)) {
                 return AjaxResult.error("卡密不能为空");
@@ -150,6 +150,8 @@ public class CardKeysServiceImpl implements ICardKeysService
                     calendar.add(Calendar.MONTH, card.getPoints().intValue());
                 } else if ("card_type_year".equals(card.getCardType())) {
                     calendar.add(Calendar.YEAR, card.getPoints().intValue());
+                } else if ("card_type_count".equals(card.getCardType())) {
+                    calendar.add(Calendar.YEAR, 99);
                 }
 
                 card.setActivationDate(now);
@@ -158,6 +160,9 @@ public class CardKeysServiceImpl implements ICardKeysService
             } else if (now.compareTo(card.getExpirationDate()) > 0) {
                 // 有效期校验
                 return AjaxResult.error("卡密已过期");
+            } else if (card.getLoginCount() > card.getPoints()) {
+                // 使用次数校验
+                return AjaxResult.error("卡密次数已用完");
             }
 
             // 更新登录信息

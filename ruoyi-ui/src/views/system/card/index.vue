@@ -278,13 +278,16 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="到期时间" prop="expirationDate">
+        <el-form-item label="到期时间" prop="expirationDate" v-if="statusForm.cardType !== 'card_type_count'">
           <el-date-picker clearable
                           v-model="statusForm.expirationDate"
                           type="datetime"
                           value-format="yyyy-MM-dd HH:mm:ss"
                           placeholder="请选择到期时间">
           </el-date-picker>
+        </el-form-item>
+        <el-form-item label="点数" prop="points" v-if="statusForm.cardType === 'card_type_count'">
+          <el-input v-model="statusForm.points" placeholder="请输入点数" />
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-radio-group v-model="statusForm.status">
@@ -433,8 +436,8 @@ export default {
       this.form = {
         id: null,
         code: null,
-        cardType: "card_type_hour",
-        points: 1,
+        cardType: "card_type_count",
+        points: 100,
         count: 1,
         creatBy: null,
         activationDate: null,
