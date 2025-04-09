@@ -123,7 +123,6 @@ public class CardKeysServiceImpl implements ICardKeysService
      * @param validateCardRequest
      * @return
      */
-    @RateLimiter(key = "card_key_validate_limit:", limitType = LimitType.IP, time = 60, count = 100)
     @Override
     public AjaxResult validateCardKey(ValidateCardRequest validateCardRequest) {
 

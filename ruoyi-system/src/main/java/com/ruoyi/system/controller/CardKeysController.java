@@ -4,6 +4,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.common.annotation.RateLimiter;
+import com.ruoyi.common.enums.LimitType;
 import com.ruoyi.system.domain.vo.ValidateCardRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,11 +101,13 @@ public class CardKeysController extends BaseController
     }
 
     @PostMapping("/validate")
+    @RateLimiter(key = "card_key_validate_limit:", limitType = LimitType.IP, time = 60, count = 100)
     public AjaxResult validateCard(@RequestBody ValidateCardRequest validateCardRequest, HttpServletRequest request) {
         return cardKeysService.validateCardKey(validateCardRequest);
     }
 
     @GetMapping(value = "/getCardInfo/{code}")
+    @RateLimiter(key = "card_key_validate_limit:", limitType = LimitType.IP, time = 60, count = 100)
     public AjaxResult getCardInfo(@PathVariable("code") String code)
     {
         CardKeys cardKeys = new CardKeys();
