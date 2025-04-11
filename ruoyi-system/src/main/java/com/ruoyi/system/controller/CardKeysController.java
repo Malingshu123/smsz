@@ -101,13 +101,13 @@ public class CardKeysController extends BaseController
     }
 
     @PostMapping("/validate")
-    @RateLimiter(key = "card_key_validate_limit:", limitType = LimitType.IP, time = 60, count = 100)
+    @RateLimiter(key = "card_key_validate_limit:", limitType = LimitType.IP, time = 2, count = 1)
     public AjaxResult validateCard(@RequestBody ValidateCardRequest validateCardRequest, HttpServletRequest request) {
         return cardKeysService.validateCardKey(validateCardRequest);
     }
 
     @GetMapping(value = "/getCardInfo/{code}")
-    @RateLimiter(key = "card_key_validate_limit:", limitType = LimitType.IP, time = 60, count = 100)
+    @RateLimiter(key = "card_key_cardInfo_limit:", limitType = LimitType.IP, time = 2, count = 1)
     public AjaxResult getCardInfo(@PathVariable("code") String code)
     {
         CardKeys cardKeys = new CardKeys();
@@ -115,5 +115,12 @@ public class CardKeysController extends BaseController
         CardKeys result = cardKeysService.selectCardKeysList(cardKeys).get(0);
         result.setId(null);
         return success(result);
+    }
+
+    @GetMapping(value = "/limit")
+    @RateLimiter(limitType = LimitType.IP, time = 2, count = 1)
+    public AjaxResult limit()
+    {
+        return success();
     }
 }
